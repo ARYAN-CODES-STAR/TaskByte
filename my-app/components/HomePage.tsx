@@ -1,4 +1,3 @@
-// components/Header.tsx
 import Link from 'next/link';
 import { ShoppingCart, User, Search } from 'lucide-react';
 
