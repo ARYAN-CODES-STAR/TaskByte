@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const categories = [
@@ -11,7 +11,7 @@ const categories = [
   { id: "home", label: "Home" },
 ];
 
-export default function Sidebar() {
+function SidebarContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -157,5 +157,27 @@ export default function Sidebar() {
         </div>
       </div>
     </div>
+  );
+}
+
+function SidebarFallback() {
+  return (
+    <div className="w-64 bg-gray-50 p-6 h-fit text-black">
+      <h2 className="text-lg font-semibold mb-6">Filters</h2>
+      <div className="animate-pulse">
+        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+        <div className="h-4 bg-gray-200 rounded mb-4"></div>
+        <div className="h-6 bg-gray-200 rounded"></div>
+      </div>
+    </div>
+  );
+}
+
+export default function Sidebar() {
+  return (
+    <Suspense fallback={<SidebarFallback />}>
+      <SidebarContent />
+    </Suspense>
   );
 }
